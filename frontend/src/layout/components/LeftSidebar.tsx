@@ -5,9 +5,18 @@ import { HomeIcon, Library, MessageCircleIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import PlaylistSkeleton from "@/components/skeletons/PlaylistSkeleton";
+import { useMusicStore } from "@/store/useMusicStore";
+import { useEffect } from "react";
 
 const LeftSidebar = () => {
-  const isLoading = true;
+  const { isLoading, albums, fetchAlbums } = useMusicStore();
+
+  useEffect(() => {
+    fetchAlbums();
+  }, [fetchAlbums]);
+
+  console.log({ albums });
+
   return (
     <div className="flex flex-col h-full gap-2">
       {/* Navigation menu  */}
@@ -53,8 +62,31 @@ const LeftSidebar = () => {
           </div>
         </div>
         <ScrollArea className="h-[calc(100vh-300px)]">
-          <div className="space-y-2"></div>
-          {isLoading ? <PlaylistSkeleton /> : <></>}
+          <div className="space-y-2">
+            {isLoading ? (
+              <PlaylistSkeleton />
+            ) : (
+              albums.map((album) => (
+                <Link
+                  key={album.id}
+                  to={`/albums/${album._id}`}
+                  className="flex items-center gap-3 p-2 rounded-md cursor-pointer hover:bg-zinc-800 group"
+                >
+                  <img
+                    src={album.imageUrl}
+                    alt={album.title}
+                    className="flex-shrink-0 object-cover rounded-md size-12"
+                  />
+                  <div className="flex-1 hidden min-w-0 space-y-2 md:block">
+                    <p className="font-medium truncate">{album.title}</p>
+                    <p className="text-sm truncate text-zinc-400">
+                      Album • {album.artist}
+                    </p>
+                  </div>
+                </Link>
+              ))
+            )}
+          </div>
         </ScrollArea>
       </div>
     </div>

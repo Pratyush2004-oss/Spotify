@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/resizable";
 import LeftSidebar from "./components/LeftSidebar";
 import RightSidebar from "./components/RightSidebar";
+import AudioPlayer from "./components/AudioPlayer";
 
 const MainLayout = () => {
   const isMobile = false;
@@ -15,6 +16,7 @@ const MainLayout = () => {
         direction="horizontal"
         className="flex flex-1 h-full p-2 overflow-hidden"
       >
+        <AudioPlayer />
         {/* left sidebar */}
         <ResizablePanel
           defaultSize={20}

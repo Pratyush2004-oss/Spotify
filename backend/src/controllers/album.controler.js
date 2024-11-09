@@ -18,10 +18,10 @@ export const getAlbumById = async (req, res, next) => {
         const album = await AlbumModel.findById(albumId).populate("songs");
 
         if (!album) {
-            return res.status(404).json({ success: false, message: "Table not found" })
+            return res.status(404).json({ success: false, message: "Album not found" })
         }
 
-        res.status(201).json({
+        res.status(200).json({
             success: true,
             album
         })

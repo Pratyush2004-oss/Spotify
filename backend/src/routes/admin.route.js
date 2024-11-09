@@ -6,9 +6,9 @@ const router = Router();
 router.use(protectRoute, requireAdmin);
 
 router.post('/create-song', createSong)
-router.delete('songs/:id', deleteSong)
+router.delete('/songs/:id', deleteSong)
 router.post('/create-album', createAlbum)
-router.delete('albums/:id', deleteSong)
-router.get('check', checkAdmin)
+router.delete('/albums/:id', deleteSong)
+router.get('/check', checkAdmin)
 
 export default router;

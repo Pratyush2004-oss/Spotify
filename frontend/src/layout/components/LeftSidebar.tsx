@@ -14,9 +14,6 @@ const LeftSidebar = () => {
   useEffect(() => {
     fetchAlbums();
   }, [fetchAlbums]);
-
-  console.log({ albums });
-
   return (
     <div className="flex flex-col h-full gap-2">
       {/* Navigation menu  */}
@@ -68,7 +65,7 @@ const LeftSidebar = () => {
             ) : (
               albums.map((album) => (
                 <Link
-                  key={album.id}
+                  key={album._id}
                   to={`/albums/${album._id}`}
                   className="flex items-center gap-3 p-2 rounded-md cursor-pointer hover:bg-zinc-800 group"
                 >

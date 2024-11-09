@@ -9,7 +9,7 @@ export const getstats = async (req, res, next) => {
             UserModel.countDocuments(),
             AlbumModel.countDocuments(),
 
-            SongModelaggregate([
+            SongModel.aggregate([
                 {
                     $unionWith: {
                         coll: "albums",
@@ -27,11 +27,11 @@ export const getstats = async (req, res, next) => {
             ]),
         ]);
         res.status(200).json({
-            totalAlbums, totalSongs, totalUsers, totalArtist: uniqueArtists[0].count || 0, success: true
+            totalAlbums, totalSongs, totalUsers, totalArtists: uniqueArtists[0].count || 0
         })
     }
     catch (error) {
-        console.log("Error in get-stats controller");
+        console.log("Error in get-stats controller : " + error.message);
         next();
     }
 }

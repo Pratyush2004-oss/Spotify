@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/lib/axios";
-import { Album, Song } from "@/types";
+import { Album, Song, Stats } from "@/types";
 import { create } from "zustand";
 
 interface MusicStore {
@@ -11,11 +11,15 @@ interface MusicStore {
   madeforyou: Song[];
   trending: Song[];
   featured: Song[];
+  stats: Stats;
+
   fetchAlbums: () => Promise<void>;
   fetchAlbumSongs: (id: string) => Promise<void>;
   fetchMadeForYou: () => Promise<void>;
   fetchFeatured: () => Promise<void>;
   fetchTrending: () => Promise<void>;
+  fetchStats: () => Promise<void>;
+  fetchSongs: () => Promise<void>;
 }
 
 export const useMusicStore = create<MusicStore>((set) => ({
@@ -27,6 +31,12 @@ export const useMusicStore = create<MusicStore>((set) => ({
   madeforyou: [],
   trending: [],
   featured: [],
+  stats: {
+    totalSongs: 0,
+    totalUsers: 0,
+    totalAlbums: 0,
+    totalArtists: 0,
+  },
 
   fetchAlbums: async () => {
     // fetching data
@@ -67,7 +77,7 @@ export const useMusicStore = create<MusicStore>((set) => ({
     }
   },
 
-   fetchFeatured: async () => {
+  fetchFeatured: async () => {
     // fetching data
     set({ isLoading: true, error: null });
     try {
@@ -86,6 +96,32 @@ export const useMusicStore = create<MusicStore>((set) => ({
     try {
       const response = await axiosInstance.get("/songs/trending");
       set({ trending: response.data.songs });
+    } catch (error: any) {
+      set({ error: error.response.data.message });
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  fetchStats: async () => {
+    // fetching data
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axiosInstance.get("/stats");
+      set({ stats: response.data });
+    } catch (error: any) {
+      set({ error: error.response.data.message });
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  fetchSongs: async () => {
+    // fetching data
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axiosInstance.get("/songs");
+      set({ songs: response.data.songs });
     } catch (error: any) {
       set({ error: error.response.data.message });
     } finally {

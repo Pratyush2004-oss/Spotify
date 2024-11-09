@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import FeaturedSection from "./components/FeaturedSection";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import SectionGrid from "./components/SectionGrid";
+import { usePlayerStore } from "@/store/usePlayerStore";
 const HomePage = () => {
   const {
     fetchFeatured,
@@ -12,13 +13,23 @@ const HomePage = () => {
     trending,
     madeforyou,
     isLoading,
+    featured,
   } = useMusicStore();
+
+  const { initializeQueue } = usePlayerStore();
 
   useEffect(() => {
     fetchFeatured();
     fetchTrending();
     fetchMadeForYou();
   }, [fetchFeatured, fetchTrending, fetchMadeForYou]);
+
+  useEffect(() => {
+    if (madeforyou.length > 0 && trending.length > 0 && featured.length > 0) {
+      const allSongs = [...featured, ...madeforyou, ...trending];
+      initializeQueue(allSongs);
+    }
+  }, [initializeQueue, madeforyou, trending, featured]);
   return (
     <main className="h-full overflow-hidden rounded-lg ">
       <Topbar />
@@ -31,7 +42,7 @@ const HomePage = () => {
 
           <div className="space-y-8">
             <SectionGrid
-              title="Made For You" 
+              title="Made For You"
               songs={madeforyou}
               isLoading={isLoading}
             />

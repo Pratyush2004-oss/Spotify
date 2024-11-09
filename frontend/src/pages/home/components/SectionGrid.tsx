@@ -1,6 +1,7 @@
 import { Song } from "@/types";
 import SectionGridSkeleton from "./SEctionGridSkeleton";
 import { Button } from "@/components/ui/button";
+import PlayButton from "./PlayButton";
 
 type SectionGridProps = {
   title: string;
@@ -37,6 +38,7 @@ const SectionGrid = ({ title, songs, isLoading }: SectionGridProps) => {
                 />
               </div>
               {/* Play button */}
+              <PlayButton song={song} />
             </div>
             <h3 className="mb-2 font-medium truncate">{song.title}</h3>
             <p className="text-sm truncate text-zinc-400">{song.artist}</p>

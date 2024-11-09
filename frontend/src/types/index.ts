@@ -20,3 +20,10 @@ export interface Album {
     createdAt: string
     updatedAt: string
 }
+
+export interface Stats{
+    totalSongs: number
+    totalUsers: number
+    totalAlbums: number
+    totalArtists: number
+}

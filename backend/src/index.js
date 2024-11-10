@@ -73,21 +73,21 @@ app.use('/api/songs', songRoutes)
 app.use('/api/albums', albumRoutes)
 app.use('/api/stats', statsRoutes)
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../frontend/dist')))
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "../frontend/dist")));
     app.get("*", (req, res) => {
-        res.sendFile(path.resolve(__dirname, '../frontend/dist/index.html'))
-    })
+        res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"));
+    });
 }
 
 // error handler routes
 app.use((err, req, res, next) => {
-    res.status(500).json({ message: process.env.NODE_ENV === 'production' ? "Internal Server Error" : "Internal Server Error : " + err.message, success: false })
+    res.status(500).json({ message: process.env.NODE_ENV === 'production' ? "Internal Server Error" : "Internal Server Error : " + err.message })
 })
 
 
 const PORT = process.env.PORT;
 httpServer.listen(PORT, () => {
-    connectDb();
     console.log(`Server is running in the port ${PORT}`);
+    connectDb();
 })

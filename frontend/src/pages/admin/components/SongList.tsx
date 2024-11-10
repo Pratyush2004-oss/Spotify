@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,6 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Music } from "lucide-react";
 import SongsTable from "./SongsTable";
+import SongDialog from "./SongDialog";
 
 const SongList = () => {
   return (
@@ -21,10 +21,10 @@ const SongList = () => {
             </CardTitle>
             <CardDescription>Manage your music tracks</CardDescription>
           </div>
-          <Button>+ Add</Button>
+          <SongDialog />
         </div>
       </CardHeader>
-      <CardContent className="">
+      <CardContent>
         <SongsTable />
       </CardContent>
     </Card>

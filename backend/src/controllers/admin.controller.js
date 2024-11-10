@@ -88,6 +88,12 @@ export const deleteSong = async (req, res, next) => {
 // create album controller
 export const createAlbum = async (req, res, next) => {
     try {
+        if (!req.files || !req.files.imageFile) {
+            return res.status(400).json({
+                success: false,
+                message: "Please upload image"
+            })
+        }
         const { title, artist, releaseYear } = req.body;
         const { imageFile } = req.files;
 
@@ -99,6 +105,7 @@ export const createAlbum = async (req, res, next) => {
             releaseYear
         })
 
+        album.save();
         res.status(201).json({
             message: "Album created successfully",
             success: true,

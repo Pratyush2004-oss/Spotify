@@ -2,7 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuthStore } from "@/store/useAuthStore";
 import Header from "./components/Header";
 import DashboardStats from "./components/DashboardStats";
-import { Album, Music } from "lucide-react";
+import { Library, Music } from "lucide-react";
 import SongList from "./components/SongList";
 import AlbumsList from "./components/AlbumsList";
 import { useMusicStore } from "@/store/useMusicStore";
@@ -36,7 +36,7 @@ const AdminPage = () => {
             Songs
           </TabsTrigger>
           <TabsTrigger value="albums">
-            <Album className="mr-2 size-4" />
+            <Library className="mr-2 size-4" />
             Albums
           </TabsTrigger>
         </TabsList>

@@ -2,9 +2,11 @@ import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path'
 import { clerkMiddleware } from '@clerk/express'
-import fileUplaod from 'express-fileupload'
+import fileUplaod from 'express-fileupload';
+import fs from 'fs';
 import cors from 'cors';
 import { createServer } from 'http';
+import cron from 'node-cron';
 
 // created modules
 
@@ -48,12 +50,35 @@ app.use(
     })
 );
 
+// cron jobs => delete thode files in every single hour
+const tempDir = path.join(process.cwd(), 'tmp');
+cron.schedule("0 * * * *", () => {
+    if (fs.existsSync(tempDir)) {
+        fs.readdir(tempDir, (err, files) => {
+            if (err) {
+                console.log("error", err);
+                return;
+            }
+            for (const file of files) {
+                fs.unlink(path.join(tempDir, file), (err) => { });
+            }
+        });
+    }
+});
+
 app.use('/api/users', userRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/admin', adminRoutes)
 app.use('/api/songs', songRoutes)
 app.use('/api/albums', albumRoutes)
 app.use('/api/stats', statsRoutes)
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../frontend/dist')))
+    app.get("*", req, res => {
+        res.sendFile(path.resolve(__dirname, '../frontend/dist/index.html'))
+    })
+}
 
 // error handler routes
 app.use((err, req, res, next) => {

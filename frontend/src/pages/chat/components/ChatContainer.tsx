@@ -54,38 +54,54 @@ const ChatContainer = () => {
       {/* Chat Area component */}
       <ScrollArea className="h-[calc(100vh-340px)]">
         <div className="p-4 space-y-4">
-          {messages.map((message) => (
-            <div
-              key={message._id}
-              className={`flex items-start gap-3 ${
-                message.senderId === user?.id ? "flex-row-reverse " : ""
-              }`}
-            >
-              <Avatar className="border rounded-full size-10 border-zinc-800 ">
-                <AvatarImage
-                  className="border rounded-full size-10 border-zinc-800 "
-                  src={
-                    message.senderId === user?.id
-                      ? user?.imageUrl
-                      : selectedUser.imageUrl
-                  }
-                />
-                <AvatarFallback>{selectedUser.fullName[0]}</AvatarFallback>
-              </Avatar>
+          {messages.length > 0 ? (
+            messages.map((message) => (
               <div
-                className={`rounded-lg p-3 max-w-[70%] ${
-                  message.senderId === user?.id
-                    ? "bg-green-300/50"
-                    : "bg-zinc-800/50"
+                key={message._id}
+                className={`flex items-start gap-3 ${
+                  message.senderId === user?.id ? "flex-row-reverse " : ""
                 }`}
               >
-                <p className="text-sm">{message.content}</p>
-                <span className="block mt-1 text-xs text-zinc-300">
-                  {formatTime(message.createdAt)}
-                </span>
+                <Avatar className="border rounded-full size-10 border-zinc-800 ">
+                  <AvatarImage
+                    className="border rounded-full size-10 border-zinc-800 "
+                    src={
+                      message.senderId === user?.id
+                        ? user?.imageUrl
+                        : selectedUser.imageUrl
+                    }
+                  />
+                  <AvatarFallback>{selectedUser.fullName[0]}</AvatarFallback>
+                </Avatar>
+                <div
+                  className={`rounded-lg p-3 max-w-[70%] ${
+                    message.senderId === user?.id
+                      ? "bg-green-300/50"
+                      : "bg-zinc-800/50"
+                  }`}
+                >
+                  <p className="text-sm">{message.content}</p>
+                  <span className="block mt-1 text-xs text-zinc-300">
+                    {formatTime(message.createdAt)}
+                  </span>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="flex items-center justify-center h-full">
+              <div className="flex flex-col items-center gap-2">
+                <img
+                  className="size-12 animate-bounce"
+                  src="spotify.svg"
+                  alt="Spotify"
+                />
+                <h1 className="text-2xl font-bold">
+                  Start a conversation with a friend
+                </h1>
+                <p>Send a message to start a conversation</p>
               </div>
             </div>
-          ))}
+          )}
         </div>
       </ScrollArea>
 

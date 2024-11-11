@@ -24,9 +24,9 @@ export const initializeSocket = (server) => {
             io.emit("activities", Array.from(userActivities.entries()));
         })
         socket.on("update_activity", ({ userId, activity }) => {
-			userActivities.set(userId, activity);
-			io.emit("activity_updated", { userId, activity });
-		});
+            userActivities.set(userId, activity);
+            io.emit("activity_updated", { userId, activity });
+        });
 
         socket.on("send_message", async (data) => {
             try {
@@ -39,7 +39,7 @@ export const initializeSocket = (server) => {
                     io.to(receiverSocket).emit("receive_message", message);
                 }
 
-                socket.emit("message_sent", message);
+                socket.to(receiverSocket).emit("message_sent", message);
             } catch (error) {
                 console.log("Message Error : " + error);
                 socket.emit("message_error", error.message);

@@ -1,10 +1,10 @@
 import UsersListSkeleton from "@/components/skeletons/UsersListSkeleton";
 import { useChatStore } from "@/store/useChatStore";
 import { SignedIn, SignedOut, useUser } from "@clerk/clerk-react";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { HeadphonesIcon, Music, Users } from "lucide-react";
 import { useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const RightSidebar = () => {
   const { fetchUsers, isLoading, users, onlineUsers, userActivities } =
